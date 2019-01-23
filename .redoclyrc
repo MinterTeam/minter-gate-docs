@@ -1,0 +1,6 @@
+swaggerUI: false
+oasVersion: '3.0.2'
+splitSpec: false
+codeSamples: true
+travis: true
+repo: MinterTeam/minter-gate-docs
