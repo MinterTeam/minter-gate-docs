@@ -7,12 +7,7 @@ class App extends Component {
         return (
             <div className="App">
                 <RedocStandalone
-                    specUrl="/openapi.yaml"
-                    onLoaded={error => {
-                        if (!error) {
-                            console.log('Yay!');
-                        }
-                    }}
+                    specUrl="specs/openapi.yaml"
                 />
             </div>
         );
