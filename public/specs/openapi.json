@@ -3,7 +3,7 @@
   "info": {
     "title": "Minter Gate API",
     "description": "# Introduction\nMinter Gate is a service which provides to clients publish prepared transactions to Minter Network\n### Install from source\nTo install service flow next steps:\n- Download source from [GitHub](https://github.com/MinterTeam/explorer-gate)\n- Run `dep ensure`\n- Run `make build`\n- Move `config.json.example` to `config.json` and fill it\n- Run `./gate`\n\nYou can use SystemD to run the service. Example of systemd uint is [here](https://github.com/MinterTeam/explorer-gate/blob/master/explorer-gate.service)\n",
-    "version": "1.2.5",
+    "version": "1.3.0",
     "license": {
       "name": "MIT",
       "url": "https://github.com/MinterTeam/explorer-gate/blob/master/LICENSE"
@@ -113,6 +113,84 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EstimateCoinSellResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodeErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/v1/estimate/coin-sell-all": {
+      "get": {
+        "tags": [
+          "Estimate"
+        ],
+        "summary": "Sell all coins estimate.",
+        "description": "Returns a number of coins you will get and commission for the transaction.",
+        "parameters": [
+          {
+            "name": "coinToSell",
+            "in": "query",
+            "required": true,
+            "description": "Name of coin you going to sell",
+            "schema": {
+              "type": "string",
+              "example": "BIP"
+            }
+          },
+          {
+            "name": "coinToBuy",
+            "in": "query",
+            "required": true,
+            "description": "Name of coin you going to buy",
+            "schema": {
+              "type": "string",
+              "example": "SUPERCOIN"
+            }
+          },
+          {
+            "name": "valueToSell",
+            "in": "query",
+            "required": true,
+            "description": "Number of coins you sell (in PIP)",
+            "schema": {
+              "type": "integer",
+              "format": "uint64",
+              "example": 123456789000000000
+            }
+          },
+          {
+            "name": "gasPrice",
+            "in": "query",
+            "required": true,
+            "description": "Gas price (in PIP)",
+            "schema": {
+              "type": "integer",
+              "format": "uint64",
+              "example": 10000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstimateCoinSellAllResponse"
                 }
               }
             }
@@ -246,6 +324,40 @@
         }
       }
     },
+    "/v1/min-gas": {
+      "get": {
+        "tags": [
+          "Gas"
+        ],
+        "summary": "Min gas.",
+        "description": "Returns a minimun gas price.",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinGasResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodeErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
     "/v1/transaction/push": {
       "post": {
         "tags": [
@@ -344,6 +456,18 @@
           "commission"
         ]
       },
+      "EstimateCoinSellAll": {
+        "properties": {
+          "will_get": {
+            "type": "string",
+            "example": "100000"
+          }
+        },
+        "required": [
+          "will_get",
+          "commission"
+        ]
+      },
       "EstimateCoinBuy": {
         "properties": {
           "will_pay": {
@@ -365,6 +489,17 @@
           "nonce": {
             "type": "string",
             "example": "1000"
+          }
+        },
+        "required": [
+          "nonce"
+        ]
+      },
+      "MinGas": {
+        "properties": {
+          "gas": {
+            "type": "string",
+            "example": "1"
           }
         },
         "required": [
@@ -403,6 +538,13 @@
           }
         }
       },
+      "EstimateCoinSellAllResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/EstimateCoinSellAll"
+          }
+        }
+      },
       "EstimateCoinBuyResponse": {
         "properties": {
           "data": {
@@ -414,6 +556,13 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/Nonce"
+          }
+        }
+      },
+      "MinGasResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/MinGas"
           }
         }
       },
