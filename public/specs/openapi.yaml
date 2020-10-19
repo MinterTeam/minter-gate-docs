@@ -183,10 +183,10 @@ paths:
           schema:
             type: string
             example: SUPERCOIN
-        - name: valueToSell
+        - name: valueToBuy
           in: query
           required: true
-          description: Number of coins you have to pay (in PIP)
+          description: Number of coins you going to buy (in PIP)
           schema:
             type: integer
             format: uint64
