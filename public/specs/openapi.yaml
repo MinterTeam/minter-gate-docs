@@ -167,7 +167,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you have to pay and commission for the transaction.
+      description: Returns a number of coins you going to pay and commission for the transaction.
       parameters:
         - name: coinToSell
           in: query
@@ -411,7 +411,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you have to pay and commission for the transaction.
+      description: Returns a number of coins you going to pay and commission for the transaction.
       parameters:
         - name: coin_to_sell
           in: query
@@ -430,7 +430,7 @@ paths:
         - name: value_to_buy
           in: query
           required: true
-          description: Number of coins you have to pay (in PIP)
+          description: Number of coins you going to pay (in PIP)
           schema:
             type: integer
             format: uint64
