@@ -3,6 +3,7 @@
 
 ## Links
 
+- [Gate Repo](https://github.com/MinterTeam/explorer-gate)
 - [Reference Documentation (ReDoc)](https://minterteam.github.io/minter-gate-docs/)
 - OpenAPI Raw Files: [JSON](https://minterteam.github.io/minter-gate-docs/openapi.json) [YAML](https://minterteam.github.io/minter-gate-docs/openapi.yaml)
 
