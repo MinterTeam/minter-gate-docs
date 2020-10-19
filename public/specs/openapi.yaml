@@ -4,7 +4,11 @@ info:
   description: >
     # Introduction
 
-    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network
+    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network.
+    The main difference between Minter Node, that Gate waits for tx to appear in block, before respond with success code.
+    
+    - Github: [github.com/MinterTeam/explorer-gate](https://github.com/MinterTeam/explorer-gate)
+    - Docs: [github.com/MinterTeam/minter-gate-docs](https://github.com/MinterTeam/minter-gate-docs)
 
     ### Install from source
 
@@ -257,7 +261,13 @@ paths:
       tags:
         - Transaction
       summary: Push transaction.
-      description: Send transaction to the network. Return hash of transactions.
+      description: >
+        Send transaction to the network. Wait for tx to appear in block, before respond with success code.
+        
+        Return hash of transactions.
+        
+        Note: in some rare cases transaction may appear in the block with failed status, so check it by hash, to ensure that it is succeeded.
+      
       requestBody:
         required: true
         content:
