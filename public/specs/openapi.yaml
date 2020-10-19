@@ -4,7 +4,11 @@ info:
   description: >
     # Introduction
 
-    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network
+    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network.
+    The main difference between Minter Node, that Gate waits for tx to appear in block, before respond with success code.
+    
+    - Github: [github.com/MinterTeam/explorer-gate](https://github.com/MinterTeam/explorer-gate)
+    - Docs: [github.com/MinterTeam/minter-gate-docs](https://github.com/MinterTeam/minter-gate-docs)
 
     ### Install from source
 
@@ -163,7 +167,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you have to pay and commission for the transaction.
+      description: Returns a number of coins you going to pay and commission for the transaction.
       parameters:
         - name: coinToSell
           in: query
@@ -179,10 +183,10 @@ paths:
           schema:
             type: string
             example: SUPERCOIN
-        - name: valueToSell
+        - name: valueToBuy
           in: query
           required: true
-          description: Number of coins you have to pay (in PIP)
+          description: Number of coins you going to buy (in PIP)
           schema:
             type: integer
             format: uint64
@@ -257,7 +261,13 @@ paths:
       tags:
         - Transaction
       summary: Push transaction.
-      description: Send transaction to the network. Return hash of transactions.
+      description: >
+        Send transaction to the network. Wait for tx to appear in block, before respond with success code.
+        
+        Return hash of transactions.
+        
+        Note: in some rare cases transaction may appear in the block with failed status, so check it by hash, to ensure that it is succeeded.
+      
       requestBody:
         required: true
         content:
@@ -401,7 +411,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you have to pay and commission for the transaction.
+      description: Returns a number of coins you going to pay and commission for the transaction.
       parameters:
         - name: coin_to_sell
           in: query
@@ -420,7 +430,7 @@ paths:
         - name: value_to_buy
           in: query
           required: true
-          description: Number of coins you have to pay (in PIP)
+          description: Number of coins you going to pay (in PIP)
           schema:
             type: integer
             format: uint64
