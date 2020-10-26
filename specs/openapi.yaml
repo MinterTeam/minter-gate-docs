@@ -4,11 +4,7 @@ info:
   description: >
     # Introduction
 
-    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network.
-    The main difference between Minter Node, that Gate waits for tx to appear in block, before respond with success code.
-
-    - Github: [github.com/MinterTeam/explorer-gate](https://github.com/MinterTeam/explorer-gate)
-    - Docs: [github.com/MinterTeam/minter-gate-docs](https://github.com/MinterTeam/minter-gate-docs)
+    Minter Gate is a service which provides to clients publish prepared transactions to Minter Network
 
     ### Install from source
 
@@ -25,7 +21,7 @@ info:
 
     You can use SystemD to run the service. Example of systemd uint is [here](https://github.com/MinterTeam/explorer-gate/blob/master/explorer-gate.service)
 
-  version: 2.13.0
+  version: 1.3.0
   license:
     name: MIT
     url: 'https://github.com/MinterTeam/explorer-gate/blob/master/LICENSE'
@@ -167,7 +163,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you going to pay and commission for the transaction.
+      description: Returns a number of coins you have to pay and commission for the transaction.
       parameters:
         - name: coinToSell
           in: query
@@ -183,10 +179,10 @@ paths:
           schema:
             type: string
             example: SUPERCOIN
-        - name: valueToBuy
+        - name: valueToSell
           in: query
           required: true
-          description: Number of coins you going to buy (in PIP)
+          description: Number of coins you have to pay (in PIP)
           schema:
             type: integer
             format: uint64
@@ -261,13 +257,7 @@ paths:
       tags:
         - Transaction
       summary: Push transaction.
-      description: >
-        Send transaction to the network. Wait for tx to appear in block, before respond with success code.
-
-        Return hash of transactions.
-
-        Note: in some rare cases transaction may appear in the block with failed status, so check it by hash, to ensure that it is succeeded.
-
+      description: Send transaction to the network. Return hash of transactions.
       requestBody:
         required: true
         content:
@@ -411,7 +401,7 @@ paths:
       tags:
         - Estimate
       summary: Buy coins estimate.
-      description: Returns a number of coins you going to pay and commission for the transaction.
+      description: Returns a number of coins you have to pay and commission for the transaction.
       parameters:
         - name: coin_to_sell
           in: query
@@ -430,7 +420,7 @@ paths:
         - name: value_to_buy
           in: query
           required: true
-          description: Number of coins you going to pay (in PIP)
+          description: Number of coins you have to pay (in PIP)
           schema:
             type: integer
             format: uint64
@@ -511,7 +501,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PushTransactionRequest'
+              $ref: '#/components/schemas/PushTransactionRequestV2'
       responses:
         '200':
           description: Ok
@@ -768,5 +758,10 @@ components:
     PushTransactionRequest:
       properties:
         transaction:
+          type: string
+          example: 'f8820d018a4d4e540000000000000001a9e88a4d4e5400000000000000941b685a7c1e78726c48f619c497a07ed75fe00483872386f26fc10000808001b845f8431ca05ddcd3ffd2d5b21ffe4686cadbb462bad9facdd7ee0c2db31a7b6da6f06468b3a044df8fc8b4c4190ef352e0f70112527b6b25c4a22a67c9e9365ac7e511ac12f3'
+    PushTransactionRequestV2:
+      properties:
+        tx:
           type: string
           example: 'f8820d018a4d4e540000000000000001a9e88a4d4e5400000000000000941b685a7c1e78726c48f619c497a07ed75fe00483872386f26fc10000808001b845f8431ca05ddcd3ffd2d5b21ffe4686cadbb462bad9facdd7ee0c2db31a7b6da6f06468b3a044df8fc8b4c4190ef352e0f70112527b6b25c4a22a67c9e9365ac7e511ac12f3'
